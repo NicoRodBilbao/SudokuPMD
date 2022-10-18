@@ -1,3 +1,42 @@
 <resources>
-    <string name="app_name">SudokuPMD</string>
+    <string name="app_name">Sudoku</string>
+
+    <string name="numbre0">0</string>
+    <string name="number1">1</string>
+    <string name="number2">2</string>
+    <string name="number3">3</string>
+    <string name="number4">4</string>
+    <string name="number5">5</string>
+    <string name="number6">6</string>
+    <string name="number7">7</string>
+    <string name="number8">8</string>
+
+    <string name="facil">Fácil</string>
+    <string name="medio">Medio</string>
+    <string name="dificil">Difícil</string>
+
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+
+    <string name="rendirse">Rendrise</string>
+    <string name="volver">Volver</string>
+    <string name="emprezar">Empezar</string>
+
+    <string name="giveUp">Give up</string>
+    <string name="goBack">Go back</string>
+    <string name="start">Start</string>
+
+    <string name="tiempo">Tiempo - </string>
+
+    <string name="time">Time - </string>
+
+    <string name="separator"> - </string>
+    <string name="numberPeriod">. </string>
+
+    <string name="siglas">Introduce tus siglas: </string>
+
+    <string name="initials">Type in your initials: </string>
+
+    <string name="empty"> </string>
 </resources>
