@@ -1,7 +1,7 @@
 package com.example.sudokupmd;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;s
+import android.os.Bundle;
 
 public class FinishWindow extends AppCompatActivity {
 
