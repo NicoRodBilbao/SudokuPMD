@@ -17,7 +17,7 @@ public class DifficultyWindow extends AppCompatActivity {
     private ImageButton imgBtnBack;
     private TextView txtEasy;
     private TextView txtMedium;
-    private TextView txtDifficult;
+    private TextView txtHard;
 
 
     protected void onCreate(Bundle savedInstanceState, String idioma) {
@@ -29,12 +29,12 @@ public class DifficultyWindow extends AppCompatActivity {
         imgBtnBack = findViewById(R.id.imgBtnVolver);
         txtEasy = findViewById(R.id.txtFacil);
         txtMedium = findViewById(R.id.txtMedio);
-        txtDifficult = findViewById(R.id.txtDificil);
+        txtHard = findViewById(R.id.txtDificil);
 
         if(idioma.equals("ENGLISH")){
             txtEasy.setText(getText(R.string.easy));
             txtMedium.setText(getText(R.string.medium));
-            txtDifficult.setText(getText(R.string.dificil));
+            txtHard.setText(getText(R.string.dificil));
         }
 
         imgBtnEasy.setOnClickListener( new View.OnClickListener() {
@@ -88,7 +88,7 @@ public class DifficultyWindow extends AppCompatActivity {
      */
     private void difficultOnclick() {
         Intent intentDificcult = new Intent(DifficultyWindow.this, GameWindow.class);
-        intentDificcult.putExtra("Difficulty", Difficulty.DIFFICULT);
+        intentDificcult.putExtra("Difficulty", Difficulty.HARD);
         startActivity(intentDificcult);
     }
 
