@@ -49,7 +49,7 @@ public class MainWindow extends AppCompatActivity {
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                menu.shouldDelayChildPressedState();
+                menu.showContextMenu();
                 if(menu.getSelectedItem().toString().equalsIgnoreCase(LaguageEnum.English.toString())){
                     startButton.setText(R.string.start);
                 }if(menu.getSelectedItem().toString().equalsIgnoreCase(LaguageEnum.Español.toString())){
