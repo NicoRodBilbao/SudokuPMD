@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sudoku</string>
+    <string name="numbre0">0</string>
+    <string name="number1">1</string>
+    <string name="number2">2</string>
+    <string name="number3">3</string>
+    <string name="number4">4</string>
+    <string name="number5">5</string>
+    <string name="number6">6</string>
+    <string name="number7">7</string>
+    <string name="number8">8</string>
+    <string name="facil">Easy</string>
+    <string name="medium">Medio</string>
+    <string name="medio">Medium</string>
+    <string name="hard">Difícil</string>
+    <string name="easy">Hard</string>
+    <string name="dificil">Hard</string>
+    <string name="giveUp">Rendrise</string>
+    <string name="rendirse">Give up</string>
+    <string name="goBack">Volver</string>
+    <string name="volver">Go back</string>
+    <string name="start">Empezar</string>
+    <string name="emprezar">Start</string>
+    <string name="time">"Tiempo - "</string>
+    <string name="tiempo">"Time - "</string>
+    <string name="separator">" - "</string>
+    <string name="numberPeriod">". "</string>
+    <string name="initials">"Introduce tus siglas: "</string>
+    <string name="siglas">"Type in your initials: "</string>
+    <string name="empty"> </string>
+</resources>

@@ -17,6 +17,7 @@ public class MainWindow extends AppCompatActivity {
     private Button startButton = null;
     private ImageButton exitButton = null;
     private Spinner menu = null;
+    private ImageButton menuButton = null;
     public static final int DifficultyWindow = 1;
 
     @Override
@@ -26,7 +27,7 @@ public class MainWindow extends AppCompatActivity {
 
         startButton = findViewById(R.id.startButton);
         exitButton = findViewById(R.id.exitButton);
-        menu = (Spinner) findViewById(R.id.spinnerMenu);
+        menuButton = (ImageButton) findViewById(R.id.menuButton);
 
         menu.setAdapter(new ArrayAdapter<LaguageEnum>(this, android.R.layout.simple_spinner_item, LaguageEnum.values()));
 
@@ -45,10 +46,16 @@ public class MainWindow extends AppCompatActivity {
             }
         });
 
-        if(menu.getSelectedItem().toString().equalsIgnoreCase(LaguageEnum.English.toString())){
-
-        }
-
-
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                menu.shouldDelayChildPressedState();
+                if(menu.getSelectedItem().toString().equalsIgnoreCase(LaguageEnum.English.toString())){
+                    startButton.setText(R.string.start);
+                }if(menu.getSelectedItem().toString().equalsIgnoreCase(LaguageEnum.Español.toString())){
+                    startButton.setText(R.string.emprezar);
+                }
+            }
+        });
     }
 }
