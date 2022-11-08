@@ -17,7 +17,7 @@ public class MainWindow extends AppCompatActivity {
     private Button startButton = null;
     private ImageButton exitButton = null;
     private Spinner menu = null;
-    public static final int GameWindow = 1;
+    public static final int DifficultyWindow = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +33,8 @@ public class MainWindow extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainWindow.this, GameWindow.class);
-                startActivityForResult(intent, GameWindow);
+                Intent intent = new Intent(MainWindow.this, DifficultyWindow.class);
+                startActivityForResult(intent, DifficultyWindow);
             }
         }) ;
 
@@ -45,12 +45,10 @@ public class MainWindow extends AppCompatActivity {
             }
         });
 
-        menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        if(menu.getSelectedItem().toString().equalsIgnoreCase(LaguageEnum.English.toString())){
 
-            }
-        });
+        }
+
 
     }
 }
