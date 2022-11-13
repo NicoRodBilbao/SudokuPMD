@@ -39,15 +39,14 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish_window);
 
+        // TODO set values when openning the activity
         this.currentUsername = "";
-        this.currentUsername = "";
-        this.currentUsername = "";
+        this.currentDifficulty= "";
+        this.currentTime = Time.valueOf("");
 
-        this.uploadData();
 
         tbl = (TableLayout) findViewById(R.id.tblClasificacion);
 
-        currentDifficulty = "Easy";
         Spinner difficultySpinner = (Spinner) findViewById(R.id.difficulty_selector);
         difficultySpinner.setOnItemSelectedListener(this);
 
@@ -57,12 +56,27 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
         db = dbHelper.getWritableDatabase();
 
         if(db == null)
-            Toast.makeText(FinishWindow.this, "ERROR: Could not write save or access the data", Toast.LENGTH_LONG);
+            Toast
+                    .makeText(FinishWindow.this, "ERROR: Could not write save or access the data", Toast.LENGTH_LONG)
+                    .show();
         else {
+            // upload the current data to the DB
+            this.uploadData();
+            // fetch the latest data from the DB
             this.fetchData();
-            if(!scores.isEmpty())
-                this.populateTable();
+            // populate the scores table
+            this.populateTable();
         }
+    }
+
+    /**
+     * Save new data onto the database
+     */
+    private void uploadData() {
+        ContentValues values = new ContentValues();
+        values.put("name", this.currentUsername);
+        values.put("difficulty", this.currentDifficulty);
+        values.put("completion_time", this.currentTime.toString());
     }
 
     /**
@@ -83,16 +97,6 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
             scores.add(score);
         }
         cursor.close();
-    }
-
-    /**
-     * Save new data onto the database
-     */
-    private void uploadData() {
-        ContentValues values = new ContentValues();
-        values.put("name", this.currentUsername);
-        values.put("difficulty", this.currentDifficulty);
-        values.put("completion_time", this.currentTime.toString());
     }
 
     /**
@@ -139,6 +143,7 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
+     * Get the difficulty (inherited method)
      * @param parent   The AdapterView where the selection happened
      * @param view     The view within the AdapterView that was clicked
      * @param position The position of the view in the adapter
@@ -150,6 +155,7 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
+     * Set default dificulty (inherited method)
      * @param parent The AdapterView that now contains no selected item.
      */
     @Override
