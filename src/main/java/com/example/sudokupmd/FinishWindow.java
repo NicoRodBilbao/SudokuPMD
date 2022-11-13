@@ -155,7 +155,7 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     * Set default dificulty (inherited method)
+     * Set default difficulty (inherited method)
      * @param parent The AdapterView that now contains no selected item.
      */
     @Override
