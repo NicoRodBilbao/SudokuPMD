@@ -3,25 +3,16 @@ package com.example.data;
 import java.sql.Time;
 
 public class Score {
-    private int id;
     private String name;
     private String difficulty;
     private Time completion_time;
 
-    public Score(int id, String name, String difficulty, Time completion_time) {
-        this.id = id;
+    public Score(String name, String difficulty, Time completion_time) {
         this.name = name;
         this.difficulty = difficulty;
         this.completion_time = completion_time;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

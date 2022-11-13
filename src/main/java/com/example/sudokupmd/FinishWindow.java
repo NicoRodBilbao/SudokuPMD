@@ -3,6 +3,7 @@ package com.example.sudokupmd;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -38,9 +39,15 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish_window);
 
+        this.currentUsername = "";
+        this.currentUsername = "";
+        this.currentUsername = "";
+
+        this.uploadData();
+
         tbl = (TableLayout) findViewById(R.id.tblClasificacion);
 
-        currentDifficulty = "Facil";
+        currentDifficulty = "Easy";
         Spinner difficultySpinner = (Spinner) findViewById(R.id.difficulty_selector);
         difficultySpinner.setOnItemSelectedListener(this);
 
@@ -62,12 +69,14 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
      * Fetch the scores from the database
      */
     private void fetchData() {
+        // Fetch the scores ordered by completion time
         Cursor cursor = db
-                .rawQuery("SELECT * FROM " + DbHelper.TABLE_SCORES, null);
+                .rawQuery("SELECT * FROM " + DbHelper.TABLE_SCORES
+                        + " ORDER BY completion_time ASC", null);
+        // Store the scores to an arraylist
         while(cursor.moveToNext()) {
             Score score = new Score(
-                    cursor.getInt(0)
-                    , cursor.getString(1)
+                    cursor.getString(1)
                     , cursor.getString(2)
                     , Time.valueOf(cursor.getString(3))
             );
@@ -76,8 +85,14 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
         cursor.close();
     }
 
+    /**
+     * Save new data onto the database
+     */
     private void uploadData() {
-
+        ContentValues values = new ContentValues();
+        values.put("name", this.currentUsername);
+        values.put("difficulty", this.currentDifficulty);
+        values.put("completion_time", this.currentTime.toString());
     }
 
     /**
