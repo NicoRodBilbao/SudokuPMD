@@ -35,47 +35,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TableRow
-            android:id="@+id/row0"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <TextView
-                android:id="@+id/scores_position"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:textSize="34sp" />
-
-            <TextView
-                android:id="@+id/scores_separator1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=". "
-                android:textSize="34sp" />
-
-            <TextView
-                android:id="@+id/scores_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Name"
-                android:textSize="34sp" />
-
-            <TextView
-                android:id="@+id/scores_separator2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" - "
-                android:textSize="34sp" />
-
-            <TextView
-                android:id="@+id/scores_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Time"
-                android:textSize="34sp" />
-        </TableRow>
-
     </TableLayout>
 
     <Spinner
@@ -86,7 +45,7 @@
         android:layout_marginTop="23dp"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="23dp"
-        android:entries="easy"
+        android:entries="Easy"
         app:layout_constraintBottom_toTopOf="@+id/tblClasificacion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
