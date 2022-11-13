@@ -39,4 +39,7 @@
     <string name="initials">Type in your initials:</string>
 
     <string name="empty"> </string>
+
+    <string name="alertaPrev">Select a number before clicking a cell.</string>
+    <string name="alertaOcup">The number is already set.</string>
 </resources>
