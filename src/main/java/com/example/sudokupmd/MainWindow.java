@@ -18,10 +18,7 @@ public class MainWindow extends AppCompatActivity{
     private Button startButton = null;
     private ImageButton exitButton = null;
     private Spinner menu = null;
-    public static final int DifficultyWindow = 1;
-
-    private Button button;
-    private MediaPlayer mediaPlayer;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +33,7 @@ public class MainWindow extends AppCompatActivity{
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if(menu.getSelectedItem().toString().equalsIgnoreCase("English")){
                     startButton.setText(R.string.start);
-                }if(menu.getSelectedItem().toString().equalsIgnoreCase(LaguageEnum.ENUM2.toString())){
+                }else{
                     startButton.setText(R.string.empezar);
                 }
             }
@@ -54,7 +51,6 @@ public class MainWindow extends AppCompatActivity{
                 intent.putExtra("language", menu.getSelectedItem().toString());
                 //TODO Add language
                 startActivity(intent);
-                finish();
             }
         }) ;
 
