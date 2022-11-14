@@ -1,13 +1,16 @@
 package com.example.sudokupmd;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -21,8 +24,9 @@ import com.example.data.Score;
 
 public class FinishWindow extends AppCompatActivity {
 
-    private Difficulty currentDifficulty;
     private String currentUsername;
+    private Difficulty currentDifficulty;
+    private Result currentResult;
     private Time currentTime;
 
     private DbHelper dbHelper;
@@ -37,6 +41,18 @@ public class FinishWindow extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish_window);
 
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(FinishWindow.this);
+        EditText input = findViewById(R.id.input_initials);
+        dialogBuilder.setTitle(getString(R.string.dialog_title));
+        dialogBuilder.setCancelable(false);
+        dialogBuilder.setPositiveButton(R.string.confirm, (DialogInterface.OnClickListener) (dialog, which) -> {
+            this.currentUsername = input.getText().toString();
+            this.run();
+        });
+
+    }
+
+    private void run() {
         tbl = (TableLayout) findViewById(R.id.tblClasificacion);
 
         scores = new ArrayList<Score>();
@@ -65,6 +81,7 @@ public class FinishWindow extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put("name", this.currentUsername);
         values.put("difficulty", this.currentDifficulty.toString());
+        values.put("result", this.currentResult.toString());
         values.put("completion_time", this.currentTime.toString());
     }
 
@@ -80,8 +97,8 @@ public class FinishWindow extends AppCompatActivity {
         while(cursor.moveToNext()) {
             Score score = new Score(
                     cursor.getString(1)
-                    , cursor.getString(2)
-                    , Boolean.parseBoolean(cursor.getString(3))
+                    , Difficulty.valueOf(cursor.getString(2))
+                    , Result.valueOf(cursor.getString(3))
                     , Time.valueOf(cursor.getString(4))
             );
             scores.add(score);
@@ -99,7 +116,8 @@ public class FinishWindow extends AppCompatActivity {
         for (Score s : scores) {
             if(tableScores.size() >= 10)
                 break;
-            if (s.getDifficulty().equals(currentDifficulty))
+            if (s.getDifficulty().equals(currentDifficulty)
+                && s.getResult().equals(Result.WIN))
                 tableScores.add(s);
         }
         // Fill out the table with the results

@@ -26,7 +26,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "name TEXT NOT NULL," +
                 "difficulty TEXT NOT NULL," +
-                "result BOOLEAN NOT NULL," +
+                "result TEXT NOT NULL," +
                 "completion_time TIMESTAMP NOT NULL)");
     }
 
