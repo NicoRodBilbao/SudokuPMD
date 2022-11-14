@@ -20,6 +20,8 @@ public class MainWindow extends AppCompatActivity{
     private Spinner menu = null;
     public static final int DifficultyWindow = 1;
 
+    private Button button;
+    private MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,7 @@ public class MainWindow extends AppCompatActivity{
                 intent.putExtra("language", menu.getSelectedItem().toString());
                 //TODO Add language
                 startActivity(intent);
+                finish();
             }
         }) ;
 

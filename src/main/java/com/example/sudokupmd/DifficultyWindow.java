@@ -17,11 +17,15 @@ public class DifficultyWindow extends AppCompatActivity {
     private ImageButton imgBtnBack;
     private TextView txtEasy;
     private TextView txtMedium;
-    private TextView txtDifficult;
+    private TextView txtHard;
+    private Enum language;
 
 
     protected void onCreate(Bundle savedInstanceState, String idioma) {
         super.onCreate(savedInstanceState);
+
+        Bundle extra = getIntent().getExtras();
+        //language = Language.valueOf(extra.getString("Language"));
         setContentView(R.layout.activity_difficulty_window);
         imgBtnEasy = findViewById(R.id.imgBtnFacil);
         imgBtnMedium = findViewById(R.id.imgBtnMedio);
@@ -29,12 +33,13 @@ public class DifficultyWindow extends AppCompatActivity {
         imgBtnBack = findViewById(R.id.imgBtnVolver);
         txtEasy = findViewById(R.id.txtFacil);
         txtMedium = findViewById(R.id.txtMedio);
-        txtDifficult = findViewById(R.id.txtDificil);
+        txtHard = findViewById(R.id.txtDificil);
 
-        if(idioma.equals("ENGLISH")){
+
+        if(language.equals("ENGLISH")){
             txtEasy.setText(getText(R.string.easy));
             txtMedium.setText(getText(R.string.medium));
-            txtDifficult.setText(getText(R.string.dificil));
+            txtHard.setText(getText(R.string.dificil));
         }
 
         imgBtnEasy.setOnClickListener( new View.OnClickListener() {
@@ -52,7 +57,7 @@ public class DifficultyWindow extends AppCompatActivity {
         imgBtnDifficult.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                difficultOnclick();
+                hardOnclick();
             }
         } );
 
@@ -70,7 +75,7 @@ public class DifficultyWindow extends AppCompatActivity {
      */
     private void easyOnclick() {
         Intent intentEasy = new Intent(DifficultyWindow.this, GameWindow.class);
-        intentEasy.putExtra("Difficulty", Difficulty.EASY);
+        intentEasy.putExtra("Difficulty", Difficulty.EASY.toString());
         startActivity(intentEasy);
     }
 
@@ -79,17 +84,18 @@ public class DifficultyWindow extends AppCompatActivity {
      */
     private void mediumOnclick() {
         Intent intentMedium = new Intent(DifficultyWindow.this, GameWindow.class);
-        intentMedium.putExtra("Difficulty", Difficulty.MEDIUM);
+        intentMedium.putExtra("Difficulty", Difficulty.MEDIUM.toString());
         startActivity(intentMedium);
     }
 
     /**
      * This method open the GameWindow in difficult difficulty
      */
-    private void difficultOnclick() {
-        Intent intentDificcult = new Intent(DifficultyWindow.this, GameWindow.class);
-        intentDificcult.putExtra("Difficulty", Difficulty.DIFFICULT);
-        startActivity(intentDificcult);
+
+    private void hardOnclick() {
+        Intent intentHard = new Intent(DifficultyWindow.this, GameWindow.class);
+        intentHard.putExtra("Difficulty", Difficulty.HARD.toString());
+        startActivity(intentHard);
     }
 
     /**
@@ -99,7 +105,6 @@ public class DifficultyWindow extends AppCompatActivity {
         Intent intentGoBack = new Intent(DifficultyWindow.this, MainWindow.class);
         startActivity(intentGoBack);
     }
-
 
 
 
