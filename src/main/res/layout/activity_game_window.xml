@@ -58,6 +58,7 @@
         android:minWidth="0dp"
         android:minHeight="0dp"
         android:text="@string/rendirse"
+        android:background="@drawable/border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

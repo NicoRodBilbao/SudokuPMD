@@ -39,6 +39,7 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println(dif);
         setContentView(R.layout.activity_game_window);
         gLayoutTab = (GridLayout) findViewById(R.id.gLayoutTab);
         gLayoutBtn = (GridLayout) findViewById(R.id.gLayoutBtn);
@@ -60,6 +61,7 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
             myButton.setMinWidth(0);
             myButton.setWidth(0);
             myButton.setHeight(0);
+            myButton.setBackgroundResource(R.drawable.border);
             gLayoutTab.addView(myButton);
         }
 
@@ -75,9 +77,10 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
             myButton.setOnClickListener(this);
             gLayoutBtn.addView(myButton);
         }
-        btnRendirse = new Button(this);
+        btnRendirse = (Button) findViewById(R.id.btnRendirse);
         btnRendirse.setText(getText(R.string.rendirse));
         btnRendirse.setId(View.generateViewId());
+        btnRendirse.setOnClickListener(this);
 
 
         timer = new Timer();
@@ -98,6 +101,9 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
 
         };
         timer.scheduleAtFixedRate(timerTask,0,1000);
+    }
+    private void stopTimer() {
+        timerTask.cancel();
     }
 
     @Override
@@ -122,11 +128,12 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
             }
         } else {
             if (selectedId == 91) {
+                stopTimer();
                 //case 91: // Rendición
                 Intent intentGame = new Intent(GameWindow.this, FinishWindow.class);
                 intentGame.putExtra("Difficulty", dif);
-                intentGame.putExtra("Time", 60);// TODO Time game
-                intentGame.putExtra("Result", "DEFEAT");
+                intentGame.putExtra("Time", time);
+                intentGame.putExtra("Result", Result.DEFEAT);
                 //TODO Add language
                 startActivity(intentGame);
                 //break;
@@ -139,7 +146,7 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
             Intent intentGame = new Intent(GameWindow.this, FinishWindow.class);
             intentGame.putExtra("Difficulty", dif);
             intentGame.putExtra("Time", 60);// TODO Time game
-            intentGame.putExtra("Result", "WIN");
+            intentGame.putExtra("Result", Result.WIN);
             //TODO Add language
             startActivity(intentGame);
         } else {
@@ -148,7 +155,7 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
                 Intent intentGame = new Intent(GameWindow.this, FinishWindow.class);
                 intentGame.putExtra("Difficulty", dif);
                 intentGame.putExtra("Time", 60);// TODO Time game
-                intentGame.putExtra("Result", "DEFEAT");
+                intentGame.putExtra("Result", Result.DEFEAT);
                 //TODO Add language
                 startActivity(intentGame);
             }
@@ -161,6 +168,7 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        System.out.println("A");
         dif = Difficulty.valueOf(data.getStringExtra("Difficulty"));
         if (dif.equals(Difficulty.EASY)) {
             sudokuTab = Sudokus.sudokuEasy;
