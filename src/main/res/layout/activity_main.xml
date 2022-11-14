@@ -4,15 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/teal_200"
     tools:context=".MainWindow">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/tittle"
+        android:layout_width="255dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="190dp"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
+        android:backgroundTintMode="src_over"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColorLink="@color/white"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toTopOf="@+id/startButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="264dp"
+        android:layout_height="93dp"
+
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="156dp"
+        android:scrollHorizontally="false"
+        android:text="@string/empezar"
+        android:textIsSelectable="false"
+        android:textSize="34sp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tittle" />
+
+    <ImageButton
+        android:id="@+id/exitButton"
+        android:layout_width="78dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:adjustViewBounds="false"
+        android:background="@drawable/flecha"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="123dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="212dp"
+        android:layout_marginTop="2dp"
+        android:entries="@array/languages_array"
+        app:layout_constraintStart_toEndOf="@+id/exitButton"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

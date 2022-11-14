@@ -3,32 +3,63 @@ package com.example.sudokupmd;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ImageButton;
+import android.widget.Spinner;
 
+import com.google.android.material.navigation.NavigationBarView;
 
-public class MainWindow extends AppCompatActivity implements View.OnClickListener {
-
-    private Button button;
-    private MediaPlayer mediaPlayer;
+public class MainWindow extends AppCompatActivity{
+    private Button startButton = null;
+    private ImageButton exitButton = null;
+    private Spinner menu = null;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(this);
-        mediaPlayer = MediaPlayer.create(this,R.raw.music);
-        mediaPlayer.start();
-    }
+        startButton = (Button) findViewById(R.id.startButton);
+        exitButton = (ImageButton) findViewById(R.id.exitButton);
+        menu = (Spinner) findViewById(R.id.spinner);
 
-    @Override
-    public void onClick(View view) {
-        Intent intentDificcult = new Intent(MainWindow.this, GameWindow.class);
-        intentDificcult.putExtra("Difficulty", Difficulty.EASY.toString());
-        setResult(RESULT_OK, intentDificcult);
-        startActivity(intentDificcult);
-        finish();
+        menu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if(menu.getSelectedItem().toString().equalsIgnoreCase("English")){
+                    startButton.setText(R.string.start);
+                }else{
+                    startButton.setText(R.string.empezar);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                startButton.setText(R.string.empezar);
+            }
+        });
+
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainWindow.this, DifficultyWindow.class);
+                intent.putExtra("language", menu.getSelectedItem().toString());
+                //TODO Add language
+                startActivity(intent);
+              finish();
+            }
+        }) ;
+
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                android.os.Process.killProcess(android.os.Process.myPid());
+              finish();
+            }
+        });
     }
 }
