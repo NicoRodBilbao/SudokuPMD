@@ -42,13 +42,16 @@ public class FinishWindow extends AppCompatActivity {
         setContentView(R.layout.activity_finish_window);
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(FinishWindow.this);
-        EditText input = new EditText(this.getBaseContext());
+        EditText input = new EditText(this);
         dialogBuilder.setTitle(getString(R.string.dialog_title));
         dialogBuilder.setCancelable(false);
+        dialogBuilder.setView(input);
         dialogBuilder.setPositiveButton(R.string.confirm, (DialogInterface.OnClickListener) (dialog, which) -> {
             this.currentUsername = input.getText().toString();
             this.run();
         });
+
+        dialogBuilder.show();
 
     }
 
@@ -65,6 +68,7 @@ public class FinishWindow extends AppCompatActivity {
                     .makeText(FinishWindow.this, "ERROR: Could not write to or access the database!", Toast.LENGTH_LONG)
                     .show();
         else {
+            System.out.println("DB is working");
             // upload the current data to the DB
             this.uploadData();
             // fetch the latest data from the DB
@@ -79,10 +83,10 @@ public class FinishWindow extends AppCompatActivity {
      */
     private void uploadData() {
         ContentValues values = new ContentValues();
-        values.put("name", this.currentUsername);
-        values.put("difficulty", this.currentDifficulty.toString());
-        values.put("result", this.currentResult.toString());
-        values.put("completion_time", this.currentTime.toString());
+        values.put("name", this.currentUsername == null ? "USER" : this.currentUsername);
+        values.put("difficulty", this.currentDifficulty == null ? "EASY" : this.currentDifficulty.toString());
+        values.put("result", this.currentResult == null ? Result.DEFEAT.toString() : this.currentResult.toString());
+        values.put("completion_time", this.currentTime == null ? "0" : this.currentTime.toString());
     }
 
     /**

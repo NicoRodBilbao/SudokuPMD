@@ -14,6 +14,10 @@ import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -160,7 +164,7 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
             }
         }
 
-        if (sudokuTab == sudokuSol) { // Condición de victoria
+        if (!checkForZeroes(sudokuTab) && isDone) { // Condición de victoria
             stopTimer();
             Intent intentGame = new Intent(GameWindow.this, FinishWindow.class);
             intentGame.putExtra("Difficulty", dif);
@@ -180,6 +184,20 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
                 startActivity(intentGame);
             }
         }
+    }
+
+    /**
+     * Checks whether there are zeroes in a matrix
+     * @param sudokuTab table matrix
+     * @return returns true if there are any zeroes
+     */
+    private boolean checkForZeroes(int[][]  sudokuTab) {
+        // check for zeroes
+        for (int[] s : sudokuTab)
+            for (int i : s)
+                if(i == 0)
+                    return true;
+        return false;
     }
 
     private void setNum(int num, ImageButton ib) {
