@@ -27,7 +27,6 @@ public class MainWindow extends AppCompatActivity{
         exitButton = (ImageButton) findViewById(R.id.exitButton);
         menu = (Spinner) findViewById(R.id.spinner);
 
-
         menu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -51,6 +50,7 @@ public class MainWindow extends AppCompatActivity{
                 intent.putExtra("language", menu.getSelectedItem().toString());
                 //TODO Add language
                 startActivity(intent);
+              finish();
             }
         }) ;
 
@@ -58,6 +58,7 @@ public class MainWindow extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 android.os.Process.killProcess(android.os.Process.myPid());
+              finish();
             }
         });
     }
