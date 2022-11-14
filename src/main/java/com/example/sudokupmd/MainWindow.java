@@ -12,14 +12,14 @@ import android.widget.Button;
 public class MainWindow extends AppCompatActivity implements View.OnClickListener {
 
     private Button button;
-private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         button = (Button) findViewById(R.id.button);
         button.setOnClickListener(this);
-        mediaPlayer  = MediaPlayer.create(this,R.raw.music);
+        mediaPlayer = MediaPlayer.create(this,R.raw.music);
         mediaPlayer.start();
     }
 
@@ -27,6 +27,8 @@ private MediaPlayer mediaPlayer;
     public void onClick(View view) {
         Intent intentDificcult = new Intent(MainWindow.this, GameWindow.class);
         intentDificcult.putExtra("Difficulty", Difficulty.HARD);
+        //setResult(RESULT_OK, intentDificcult);
         startActivity(intentDificcult);
+        //finish();
     }
 }
