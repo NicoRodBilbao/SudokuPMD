@@ -88,7 +88,7 @@ public class DifficultyWindow extends AppCompatActivity {
      */
     private void difficultOnclick() {
         Intent intentDificcult = new Intent(DifficultyWindow.this, GameWindow.class);
-        intentDificcult.putExtra("Difficulty", Difficulty.DIFFICULT);
+        intentDificcult.putExtra("Difficulty", Difficulty.HARD);
         startActivity(intentDificcult);
     }
 
