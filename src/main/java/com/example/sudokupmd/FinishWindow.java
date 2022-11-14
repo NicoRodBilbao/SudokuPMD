@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
+import android.database.CursorJoiner;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -38,12 +40,6 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish_window);
-
-        // TODO set values when openning the activity
-        this.currentUsername = "";
-        this.currentDifficulty= "";
-        this.currentTime = Time.valueOf("");
-
 
         tbl = (TableLayout) findViewById(R.id.tblClasificacion);
 
@@ -161,6 +157,13 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         // Default difficulty
-        this.changeDifficulty("Facil");
+        this.changeDifficulty(Difficulty.EASY);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        this.currentDifficulty = Difficulty.valueOf(data.getStringExtra("Difficulty"));
+        this.currentTime = new Time(data.getIntExtra("Time", 0)* 1000L);
+        this.currentResult = Result.valueOf(data.getStringExtra("Result"));
     }
 }

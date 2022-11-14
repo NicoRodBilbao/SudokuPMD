@@ -40,4 +40,6 @@
 
     <string name="empty"> </string>
     <string name="there_are_no_saved_scores_for_this_difficulty">There are no saved scores for this difficulty</string>
+
+    <string name="scoreboard">SCOREBOARD</string>
 </resources>
