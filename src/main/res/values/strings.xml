@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Sudoku</string>
 
-    <string name="numbre0">0</string>
     <string name="number1">1</string>
     <string name="number2">2</string>
     <string name="number3">3</string>
@@ -10,6 +9,7 @@
     <string name="number6">6</string>
     <string name="number7">7</string>
     <string name="number8">8</string>
+    <string name="number9">9</string>
 
     <string name="facil">Fácil</string>
     <string name="medio">Medio</string>
@@ -19,7 +19,7 @@
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
 
-    <string name="rendirse">Rendrise</string>
+    <string name="rendirse">Rendirse</string>
     <string name="volver">Volver</string>
     <string name="emprezar">Empezar</string>
 
@@ -39,6 +39,9 @@
     <string name="initials">Type in your initials:</string>
 
     <string name="empty"> </string>
+
+    <string name="alertaPrev">Select a number before clicking a cell.</string>
+    <string name="alertaOcup">The number is already set.</string>
     <string name="there_are_no_saved_scores_for_this_difficulty">There are no saved scores for this difficulty</string>
 
     <string name="scoreboard">SCOREBOARD</string>
