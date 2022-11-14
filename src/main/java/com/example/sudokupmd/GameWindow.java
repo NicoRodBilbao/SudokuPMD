@@ -25,9 +25,7 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
     int selectedRow = 1;
     int selectedCol = 1;
     int time = 0;
-    //boolean isDone = false;
-
-    private MediaPlayer mediaPlayer;
+    boolean isDone = false;
 
     private TextView textViewTiempo;
 
@@ -85,7 +83,7 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
 
         for (int i = 0; i < 9; i++) {
             myButton = new ImageButton(this);
-            setNum((i+1),myButton);
+            setNumTab((i+1),myButton);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 myButton.setBackgroundColor(getColor(R.color.background));
             }
@@ -103,14 +101,33 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
         startTimer();
     }
 
+    /**
+     * This method starts the timer in GameWindow. The value is stored in int time.
+     * STOP the timer(stopTimer()) before accessing int time.
+     */
     private void startTimer() {
         timerTask = new TimerTask() {
+            int secs=0,mins=0;
+            String timeString;
                 @Override
                 public void run () {
                     runOnUiThread(new Runnable() {
                         public void run() {
                             time++;
-                            textViewTiempo.setText(time + "");
+                            secs++;
+                            if (secs==60) {
+                                secs=0;
+                                mins++;
+                            }
+                            if (mins<10)
+                                timeString = "0"+mins+getString(R.string.separator);
+                            else
+                                timeString = mins+getString(R.string.separator);
+                            if (secs<10)
+                                timeString += "0"+secs;
+                            else
+                                timeString += secs;
+                            textViewTiempo.setText(timeString);
                         }
                     });
                 }
@@ -118,15 +135,18 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
         };
         timer.scheduleAtFixedRate(timerTask,0,1000);
     }
+
+    /**
+     * This method stops the timer, makes int time be available.
+     */
     private void stopTimer() {
         timerTask.cancel();
     }
 
     @Override
     public void onClick(View view) {
-        mediaPlayer  = MediaPlayer.create(this,R.raw.click);
-        mediaPlayer.start();
-        //isDone = false;
+        AudioPlay.playAudio(this,4);
+        isDone = false;
         ImageButton button = (ImageButton) view;
         int selectedId = view.getId();
         if (selectedId <= 81) { // Button is on the board
@@ -138,7 +158,7 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
                 if (selectedNumber != 0) { // Make sure a number is selected
                     sudokuTab[selectedCol][selectedRow] = selectedNumber;
                     setNum(selectedNumber, button);
-                    //isDone = true;
+                    isDone = true;
                 } else // No number selected
                     showAlert(getString(R.string.alertaPrev));
             } else { // Cell occupied
@@ -152,6 +172,8 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
                 intentGame.putExtra("Difficulty", dif);
                 intentGame.putExtra("Time", time);
                 intentGame.putExtra("Result", Result.DEFEAT);
+                AudioPlay.stopAudio();
+                AudioPlay.playAudio(this,2);
                 //TODO Add language
                 startActivity(intentGame);
                 //break;
@@ -161,19 +183,25 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
         }
 
         if (sudokuTab == sudokuSol) { // Condición de victoria
+            stopTimer();
             Intent intentGame = new Intent(GameWindow.this, FinishWindow.class);
             intentGame.putExtra("Difficulty", dif);
-            intentGame.putExtra("Time", 60);// TODO Time game
+            intentGame.putExtra("Time", time);
             intentGame.putExtra("Result", Result.WIN);
+            AudioPlay.stopAudio();
+            AudioPlay.playAudio(this,3);
             //TODO Add language
             startActivity(intentGame);
-        } else {
+        } else { // Condición de derrota movimiento erróneo
             //System.out.println(sudokuTab[selectedCol][selectedRow] + "," + sudokuSol[selectedCol][selectedRow]);
-            if (sudokuTab[selectedCol][selectedRow] != sudokuSol[selectedCol][selectedRow]) { // Condición de derrota
+            if (sudokuTab[selectedCol][selectedRow] != sudokuSol[selectedCol][selectedRow] && isDone) { // Condición de derrota
+                stopTimer();
                 Intent intentGame = new Intent(GameWindow.this, FinishWindow.class);
                 intentGame.putExtra("Difficulty", dif);
-                intentGame.putExtra("Time", 60);// TODO Time game
+                intentGame.putExtra("Time", time);
                 intentGame.putExtra("Result", Result.DEFEAT);
+                AudioPlay.stopAudio();
+                AudioPlay.playAudio(this,2);
                 //TODO Add language
                 startActivity(intentGame);
             }
@@ -215,6 +243,37 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    private void setNumTab(int num, ImageButton ib) {
+        switch (num) {
+            case 1:
+                ib.setImageResource(R.drawable.num1tab);
+                break;
+            case 2:
+                ib.setImageResource(R.drawable.num2tab);
+                break;
+            case 3:
+                ib.setImageResource(R.drawable.num3tab);
+                break;
+            case 4:
+                ib.setImageResource(R.drawable.num4tab);
+                break;
+            case 5:
+                ib.setImageResource(R.drawable.num5tab);
+                break;
+            case 6:
+                ib.setImageResource(R.drawable.num6tab);
+                break;
+            case 7:
+                ib.setImageResource(R.drawable.num7tab);
+                break;
+            case 8:
+                ib.setImageResource(R.drawable.num8tab);
+                break;
+            case 9:
+                ib.setImageResource(R.drawable.num9tab);
+                break;
+        }
+    }
     private void showAlert(String alert) {
         Toast.makeText(this, alert, Toast.LENGTH_SHORT).show();
     }
