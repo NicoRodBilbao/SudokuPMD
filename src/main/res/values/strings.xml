@@ -42,4 +42,7 @@
 
     <string name="alertaPrev">Select a number before clicking a cell.</string>
     <string name="alertaOcup">The number is already set.</string>
+    <string name="there_are_no_saved_scores_for_this_difficulty">There are no saved scores for this difficulty</string>
+
+    <string name="scoreboard">SCOREBOARD</string>
 </resources>
