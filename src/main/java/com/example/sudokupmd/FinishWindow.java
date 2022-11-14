@@ -42,7 +42,7 @@ public class FinishWindow extends AppCompatActivity {
         setContentView(R.layout.activity_finish_window);
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(FinishWindow.this);
-        EditText input = findViewById(R.id.input_initials);
+        EditText input = new EditText(this.getBaseContext());
         dialogBuilder.setTitle(getString(R.string.dialog_title));
         dialogBuilder.setCancelable(false);
         dialogBuilder.setPositiveButton(R.string.confirm, (DialogInterface.OnClickListener) (dialog, which) -> {
@@ -62,7 +62,7 @@ public class FinishWindow extends AppCompatActivity {
 
         if(db == null)
             Toast
-                    .makeText(FinishWindow.this, "ERROR: Could not write save or access the data", Toast.LENGTH_LONG)
+                    .makeText(FinishWindow.this, "ERROR: Could not write to or access the database!", Toast.LENGTH_LONG)
                     .show();
         else {
             // upload the current data to the DB
