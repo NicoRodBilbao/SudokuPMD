@@ -20,6 +20,9 @@
             android:name=".DifficultyWindow"
             android:exported="false" />
         <activity
+            android:name=".GameWindow"
+            android:exported="false" />
+        <activity
             android:name=".MainWindow"
             android:exported="true" >
             <intent-filter>

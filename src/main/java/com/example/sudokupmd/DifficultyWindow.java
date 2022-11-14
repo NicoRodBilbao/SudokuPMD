@@ -91,6 +91,7 @@ public class DifficultyWindow extends AppCompatActivity {
     /**
      * This method open the GameWindow in difficult difficulty
      */
+
     private void hardOnclick() {
         Intent intentHard = new Intent(DifficultyWindow.this, GameWindow.class);
         intentHard.putExtra("Difficulty", Difficulty.HARD.toString());
