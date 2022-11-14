@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -34,12 +35,20 @@ public class FinishWindow extends AppCompatActivity {
 
     private ArrayList<Score> scores;
 
-    TableLayout tbl;
+    private TableLayout tbl;
+
+    Button btnVolver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish_window);
+
+        btnVolver = (Button) findViewById(R.id.btnVolver);
+        btnVolver.setOnClickListener((a) -> {
+            Intent i = new Intent(this, MainWindow.class);
+            startActivity(i);
+        });
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(FinishWindow.this);
         EditText input = new EditText(this);
@@ -148,8 +157,10 @@ public class FinishWindow extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        this.currentDifficulty = Difficulty.valueOf(data.getStringExtra("Difficulty"));
-        this.currentTime = new Time(data.getIntExtra("Time", 0)* 1000L);
-        this.currentResult = Result.valueOf(data.getStringExtra("Result"));
+        if(requestCode == 1 && resultCode == RESULT_OK) {
+            this.currentDifficulty = Difficulty.valueOf(data.getStringExtra("Difficulty"));
+            this.currentTime = new Time(data.getIntExtra("Time", 0) * 1000L);
+            this.currentResult = Result.valueOf(data.getStringExtra("Result"));
+        }
     }
 }
