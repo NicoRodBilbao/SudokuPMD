@@ -25,7 +25,6 @@ public class DifficultyWindow extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Bundle extra = getIntent().getExtras();
         language = Language.valueOf(extra.getString("Language").toUpperCase());
         setContentView(R.layout.activity_difficulty_window);

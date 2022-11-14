@@ -19,7 +19,6 @@ public class MainWindow extends AppCompatActivity{
     private Button startButton = null;
     private ImageButton exitButton = null;
     private Spinner menu = null;
-    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +27,7 @@ public class MainWindow extends AppCompatActivity{
         startButton = (Button) findViewById(R.id.startButton);
         exitButton = (ImageButton) findViewById(R.id.exitButton);
         menu = (Spinner) findViewById(R.id.spinner);
-        mediaPlayer = MediaPlayer.create(this,R.raw.music);
-        mediaPlayer.start();
+        AudioPlay.playAudio(this,1);
 
 
         menu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
