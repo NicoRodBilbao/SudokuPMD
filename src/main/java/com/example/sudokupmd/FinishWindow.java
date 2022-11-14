@@ -1,18 +1,16 @@
 package com.example.sudokupmd;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.CursorJoiner;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Spinner;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -24,10 +22,11 @@ import java.util.ArrayList;
 import com.example.data.DbHelper;
 import com.example.data.Score;
 
-public class FinishWindow extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class FinishWindow extends AppCompatActivity {
 
-    private String currentDifficulty;
     private String currentUsername;
+    private Difficulty currentDifficulty;
+    private Result currentResult;
     private Time currentTime;
 
     private DbHelper dbHelper;
@@ -36,15 +35,25 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
     private ArrayList<Score> scores;
 
     TableLayout tbl;
-    private Result currentResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish_window);
 
-        tbl = (TableLayout) findViewById(R.id.tblClasificacion);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(FinishWindow.this);
+        EditText input = new EditText(this.getBaseContext());
+        dialogBuilder.setTitle(getString(R.string.dialog_title));
+        dialogBuilder.setCancelable(false);
+        dialogBuilder.setPositiveButton(R.string.confirm, (DialogInterface.OnClickListener) (dialog, which) -> {
+            this.currentUsername = input.getText().toString();
+            this.run();
+        });
 
+    }
+
+    private void run() {
+        tbl = (TableLayout) findViewById(R.id.tblClasificacion);
 
         scores = new ArrayList<Score>();
 
@@ -53,7 +62,7 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
 
         if(db == null)
             Toast
-                    .makeText(FinishWindow.this, "ERROR: Could not write save or access the data", Toast.LENGTH_LONG)
+                    .makeText(FinishWindow.this, "ERROR: Could not write to or access the database!", Toast.LENGTH_LONG)
                     .show();
         else {
             // upload the current data to the DB
@@ -71,7 +80,8 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
     private void uploadData() {
         ContentValues values = new ContentValues();
         values.put("name", this.currentUsername);
-        values.put("difficulty", this.currentDifficulty);
+        values.put("difficulty", this.currentDifficulty.toString());
+        values.put("result", this.currentResult.toString());
         values.put("completion_time", this.currentTime.toString());
     }
 
@@ -87,8 +97,9 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
         while(cursor.moveToNext()) {
             Score score = new Score(
                     cursor.getString(1)
-                    , cursor.getString(2)
-                    , Time.valueOf(cursor.getString(3))
+                    , Difficulty.valueOf(cursor.getString(2))
+                    , Result.valueOf(cursor.getString(3))
+                    , Time.valueOf(cursor.getString(4))
             );
             scores.add(score);
         }
@@ -105,7 +116,8 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
         for (Score s : scores) {
             if(tableScores.size() >= 10)
                 break;
-            if (s.getDifficulty().equals(currentDifficulty))
+            if (s.getDifficulty().equals(currentDifficulty)
+                    && s.getResult().equals(Result.WIN))
                 tableScores.add(s);
         }
         // Fill out the table with the results
@@ -130,39 +142,9 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-    /**
-     * Change the difficulty of the scores to be shown
-     */
-    private void changeDifficulty(String difficulty) {
-        this.currentDifficulty = difficulty;
-        this.populateTable();
-    }
-
-    /**
-     * Get the difficulty (inherited method)
-     * @param parent   The AdapterView where the selection happened
-     * @param view     The view within the AdapterView that was clicked
-     * @param position The position of the view in the adapter
-     * @param id       The row id of the item that is selected
-     */
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        this.changeDifficulty(parent.getItemAtPosition(position).toString());
-    }
-
-    /**
-     * Set default difficulty (inherited method)
-     * @param parent The AdapterView that now contains no selected item.
-     */
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Default difficulty
-        this.changeDifficulty(String.valueOf(Difficulty.EASY));
-    }
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        this.currentDifficulty = String.valueOf(Difficulty.valueOf(data.getStringExtra("Difficulty")));
+        this.currentDifficulty = Difficulty.valueOf(data.getStringExtra("Difficulty"));
         this.currentTime = new Time(data.getIntExtra("Time", 0)* 1000L);
         this.currentResult = Result.valueOf(data.getStringExtra("Result"));
     }
