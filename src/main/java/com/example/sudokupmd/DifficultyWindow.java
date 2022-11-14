@@ -18,6 +18,7 @@ public class DifficultyWindow extends AppCompatActivity {
     private TextView txtEasy;
     private TextView txtMedium;
     private TextView txtHard;
+    private String language;
 
 
     protected void onCreate(Bundle savedInstanceState, String idioma) {
@@ -30,8 +31,10 @@ public class DifficultyWindow extends AppCompatActivity {
         txtEasy = findViewById(R.id.txtFacil);
         txtMedium = findViewById(R.id.txtMedio);
         txtHard = findViewById(R.id.txtDificil);
+        language = getIntent().getStringExtra("language");
 
-        if(idioma.equals("ENGLISH")){
+
+        if(language.equals("ENGLISH")){
             txtEasy.setText(getText(R.string.easy));
             txtMedium.setText(getText(R.string.medium));
             txtHard.setText(getText(R.string.dificil));
@@ -52,7 +55,7 @@ public class DifficultyWindow extends AppCompatActivity {
         imgBtnDifficult.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                difficultOnclick();
+                hardOnclick();
             }
         } );
 
@@ -86,10 +89,10 @@ public class DifficultyWindow extends AppCompatActivity {
     /**
      * This method open the GameWindow in difficult difficulty
      */
-    private void difficultOnclick() {
-        Intent intentDificcult = new Intent(DifficultyWindow.this, GameWindow.class);
-        intentDificcult.putExtra("Difficulty", Difficulty.HARD);
-        startActivity(intentDificcult);
+    private void hardOnclick() {
+        Intent intentHard = new Intent(DifficultyWindow.this, GameWindow.class);
+        intentHard.putExtra("Difficulty", Difficulty.HARD);
+        startActivity(intentHard);
     }
 
     /**
@@ -99,7 +102,10 @@ public class DifficultyWindow extends AppCompatActivity {
         Intent intentGoBack = new Intent(DifficultyWindow.this, MainWindow.class);
         startActivity(intentGoBack);
     }
-
+    /*@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }*/
 
 
 

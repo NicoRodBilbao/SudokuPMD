@@ -19,9 +19,9 @@
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
 
-    <string name="rendirse">Rendrise</string>
+    <string name="rendirse">Rendirse</string>
     <string name="volver">Volver</string>
-    <string name="emprezar">Empezar</string>
+    <string name="empezar">Empezar</string>
 
     <string name="giveUp">Give up</string>
     <string name="goBack">Go back</string>
@@ -29,14 +29,14 @@
 
     <string name="tiempo">Tiempo - </string>
 
-    <string name="time">Time - </string>
+    <string name="time">Time -</string>
 
-    <string name="separator"> - </string>
-    <string name="numberPeriod">. </string>
+    <string name="separator">-</string>
+    <string name="numberPeriod">.</string>
 
-    <string name="siglas">Introduce tus siglas: </string>
+    <string name="siglas">Introduce tus siglas:</string>
 
-    <string name="initials">Type in your initials: </string>
+    <string name="initials">Type in your initials:</string>
 
     <string name="empty"> </string>
 </resources>
