@@ -36,6 +36,7 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
     private ArrayList<Score> scores;
 
     TableLayout tbl;
+    private Result currentResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +45,6 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
 
         tbl = (TableLayout) findViewById(R.id.tblClasificacion);
 
-        Spinner difficultySpinner = (Spinner) findViewById(R.id.difficulty_selector);
-        difficultySpinner.setOnItemSelectedListener(this);
 
         scores = new ArrayList<Score>();
 
@@ -158,12 +157,12 @@ public class FinishWindow extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         // Default difficulty
-        this.changeDifficulty(Difficulty.EASY);
+        this.changeDifficulty(String.valueOf(Difficulty.EASY));
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        this.currentDifficulty = Difficulty.valueOf(data.getStringExtra("Difficulty"));
+        this.currentDifficulty = String.valueOf(Difficulty.valueOf(data.getStringExtra("Difficulty")));
         this.currentTime = new Time(data.getIntExtra("Time", 0)* 1000L);
         this.currentResult = Result.valueOf(data.getStringExtra("Result"));
     }

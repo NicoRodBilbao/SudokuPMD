@@ -3,6 +3,7 @@ package com.example.sudokupmd;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,7 +19,8 @@ public class MainWindow extends AppCompatActivity{
     private Button startButton = null;
     private ImageButton exitButton = null;
     private Spinner menu = null;
-    
+    private MediaPlayer mediaPlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,11 +28,14 @@ public class MainWindow extends AppCompatActivity{
         startButton = (Button) findViewById(R.id.startButton);
         exitButton = (ImageButton) findViewById(R.id.exitButton);
         menu = (Spinner) findViewById(R.id.spinner);
+        mediaPlayer = MediaPlayer.create(this,R.raw.music);
+        mediaPlayer.start();
+
 
         menu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if(menu.getSelectedItem().toString().equalsIgnoreCase("English")){
+                if(menu.getSelectedItem().toString().equalsIgnoreCase(String.valueOf(Language.ENGLISH))){
                     startButton.setText(R.string.start);
                 }else{
                     startButton.setText(R.string.empezar);
@@ -47,10 +52,10 @@ public class MainWindow extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainWindow.this, DifficultyWindow.class);
-                intent.putExtra("language", menu.getSelectedItem().toString());
+                intent.putExtra("Language", menu.getSelectedItem().toString());
                 //TODO Add language
                 startActivity(intent);
-              finish();
+                finish();
             }
         }) ;
 
@@ -58,7 +63,6 @@ public class MainWindow extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 android.os.Process.killProcess(android.os.Process.myPid());
-              finish();
             }
         });
     }

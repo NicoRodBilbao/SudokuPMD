@@ -25,7 +25,7 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
     int selectedRow = 1;
     int selectedCol = 1;
     int time = 0;
-    //boolean isDone = false;
+    boolean isDone = false;
 
     private MediaPlayer mediaPlayer;
 
@@ -126,7 +126,7 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
     public void onClick(View view) {
         mediaPlayer  = MediaPlayer.create(this,R.raw.click);
         mediaPlayer.start();
-        //isDone = false;
+        isDone = false;
         ImageButton button = (ImageButton) view;
         int selectedId = view.getId();
         if (selectedId <= 81) { // Button is on the board
@@ -138,7 +138,7 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
                 if (selectedNumber != 0) { // Make sure a number is selected
                     sudokuTab[selectedCol][selectedRow] = selectedNumber;
                     setNum(selectedNumber, button);
-                    //isDone = true;
+                    isDone = true;
                 } else // No number selected
                     showAlert(getString(R.string.alertaPrev));
             } else { // Cell occupied
@@ -161,18 +161,20 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
         }
 
         if (sudokuTab == sudokuSol) { // Condición de victoria
+            stopTimer();
             Intent intentGame = new Intent(GameWindow.this, FinishWindow.class);
             intentGame.putExtra("Difficulty", dif);
-            intentGame.putExtra("Time", 60);// TODO Time game
+            intentGame.putExtra("Time", time);// TODO Time game
             intentGame.putExtra("Result", Result.WIN);
             //TODO Add language
             startActivity(intentGame);
-        } else {
+        } else { // Condición de derrota movimiento erróneo
             //System.out.println(sudokuTab[selectedCol][selectedRow] + "," + sudokuSol[selectedCol][selectedRow]);
-            if (sudokuTab[selectedCol][selectedRow] != sudokuSol[selectedCol][selectedRow]) { // Condición de derrota
+            if (sudokuTab[selectedCol][selectedRow] != sudokuSol[selectedCol][selectedRow] && isDone) { // Condición de derrota
+                stopTimer();
                 Intent intentGame = new Intent(GameWindow.this, FinishWindow.class);
                 intentGame.putExtra("Difficulty", dif);
-                intentGame.putExtra("Time", 60);// TODO Time game
+                intentGame.putExtra("Time", time);// TODO Time game
                 intentGame.putExtra("Result", Result.DEFEAT);
                 //TODO Add language
                 startActivity(intentGame);

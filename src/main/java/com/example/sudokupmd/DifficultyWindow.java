@@ -10,7 +10,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class DifficultyWindow extends AppCompatActivity {
+import java.util.Locale;
+
+public class DifficultyWindow extends AppCompatActivity implements View.OnClickListener {
     private ImageButton imgBtnEasy;
     private ImageButton imgBtnMedium;
     private ImageButton imgBtnDifficult;
@@ -18,14 +20,14 @@ public class DifficultyWindow extends AppCompatActivity {
     private TextView txtEasy;
     private TextView txtMedium;
     private TextView txtHard;
-    private Enum language;
+    private Language language;
 
-
-    protected void onCreate(Bundle savedInstanceState, String idioma) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Bundle extra = getIntent().getExtras();
-        //language = Language.valueOf(extra.getString("Language"));
+        language = Language.valueOf(extra.getString("Language").toUpperCase());
         setContentView(R.layout.activity_difficulty_window);
         imgBtnEasy = findViewById(R.id.imgBtnFacil);
         imgBtnMedium = findViewById(R.id.imgBtnMedio);
@@ -77,6 +79,7 @@ public class DifficultyWindow extends AppCompatActivity {
         Intent intentEasy = new Intent(DifficultyWindow.this, GameWindow.class);
         intentEasy.putExtra("Difficulty", Difficulty.EASY.toString());
         startActivity(intentEasy);
+        finish();
     }
 
     /**
@@ -86,6 +89,7 @@ public class DifficultyWindow extends AppCompatActivity {
         Intent intentMedium = new Intent(DifficultyWindow.this, GameWindow.class);
         intentMedium.putExtra("Difficulty", Difficulty.MEDIUM.toString());
         startActivity(intentMedium);
+        finish();
     }
 
     /**
@@ -96,6 +100,7 @@ public class DifficultyWindow extends AppCompatActivity {
         Intent intentHard = new Intent(DifficultyWindow.this, GameWindow.class);
         intentHard.putExtra("Difficulty", Difficulty.HARD.toString());
         startActivity(intentHard);
+        finish();
     }
 
     /**
@@ -104,8 +109,12 @@ public class DifficultyWindow extends AppCompatActivity {
     private void goBackOnClick() {
         Intent intentGoBack = new Intent(DifficultyWindow.this, MainWindow.class);
         startActivity(intentGoBack);
+        finish();
     }
 
 
+    @Override
+    public void onClick(View view) {
 
+    }
 }
