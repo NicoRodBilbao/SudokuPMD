@@ -39,6 +39,23 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle extra = getIntent().getExtras();
+        dif = Difficulty.valueOf(extra.getString("Difficulty"));
+
+        if (dif.equals(Difficulty.EASY)) {
+            sudokuTab = Sudokus.sudokuEasy;
+            sudokuSol = Sudokus.sudokuEasySol;
+        }
+        if (dif.equals(Difficulty.MEDIUM)) {
+            sudokuTab = Sudokus.sudokuMed;
+            sudokuSol = Sudokus.sudokuMedSol;
+        }
+        if (dif.equals(Difficulty.HARD)) {
+            sudokuTab = Sudokus.sudokuHard;
+            sudokuSol = Sudokus.sudokuHardSol;
+        }
+
         System.out.println(dif);
         setContentView(R.layout.activity_game_window);
         gLayoutTab = (GridLayout) findViewById(R.id.gLayoutTab);
@@ -166,21 +183,10 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
         Toast.makeText(this, alert, Toast.LENGTH_SHORT).show();
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    /*protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         System.out.println("A");
         dif = Difficulty.valueOf(data.getStringExtra("Difficulty"));
-        if (dif.equals(Difficulty.EASY)) {
-            sudokuTab = Sudokus.sudokuEasy;
-            sudokuSol = Sudokus.sudokuEasySol;
-        }
-        if (dif.equals(Difficulty.MEDIUM)) {
-            sudokuTab = Sudokus.sudokuMed;
-            sudokuSol = Sudokus.sudokuMedSol;
-        }
-        if (dif.equals(Difficulty.HARD)) {
-            sudokuTab = Sudokus.sudokuHard;
-            sudokuSol = Sudokus.sudokuHardSol;
-        }
-    }
+
+    }*/
 }

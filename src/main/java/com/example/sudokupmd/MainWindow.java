@@ -26,9 +26,9 @@ public class MainWindow extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View view) {
         Intent intentDificcult = new Intent(MainWindow.this, GameWindow.class);
-        intentDificcult.putExtra("Difficulty", Difficulty.HARD);
-        //setResult(RESULT_OK, intentDificcult);
+        intentDificcult.putExtra("Difficulty", Difficulty.HARD.toString());
+        setResult(RESULT_OK, intentDificcult);
         startActivity(intentDificcult);
-        //finish();
+        finish();
     }
 }
