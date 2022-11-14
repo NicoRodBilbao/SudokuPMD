@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Timer;
@@ -16,13 +19,13 @@ import java.util.TimerTask;
 
 public class GameWindow extends AppCompatActivity implements View.OnClickListener {
     Difficulty dif;
-    int[][] sudokuSol = Sudokus.sudokuEasySol;
-    int[][] sudokuTab = Sudokus.sudokuEasy;
+    int[][] sudokuSol;
+    int[][] sudokuTab;
     int selectedNumber = 1;
     int selectedRow = 1;
     int selectedCol = 1;
     int time = 0;
-    boolean isDone = false;
+    //boolean isDone = false;
 
     private MediaPlayer mediaPlayer;
 
@@ -39,6 +42,8 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         Bundle extra = getIntent().getExtras();
         dif = Difficulty.valueOf(extra.getString("Difficulty"));
@@ -61,35 +66,29 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
         gLayoutTab = (GridLayout) findViewById(R.id.gLayoutTab);
         gLayoutBtn = (GridLayout) findViewById(R.id.gLayoutBtn);
         textViewTiempo = (TextView) findViewById(R.id.textViewTiempo);
-
-        Button myButton = null;
+        ImageButton myButton = null;
         for (int i = 0; i < 81; i++) { // Buttons on the board
-            myButton = new Button(this);
+            myButton = new ImageButton(this);
 
             System.out.println((((i) % 9)) + "," + (((i) / 9)) + "," + i);
-            if (Integer.valueOf(sudokuTab[(((i) / 9))][(((i) % 9))]) == 0)
-                myButton.setText("");
-            else
-                myButton.setText(Integer.valueOf(sudokuTab[(((i) / 9))][(((i) % 9))]) + "");
-            myButton.setBackgroundColor(Color.WHITE);
+            //if (Integer.valueOf(sudokuTab[(((i) / 9))][(((i) % 9))]) == 0)
+                setNum(Integer.valueOf(sudokuTab[(((i) / 9))][(((i) % 9))]),myButton);
+            //else
+                //myButton.setText(Integer.valueOf(sudokuTab[(((i) / 9))][(((i) % 9))]) + "");
+
             myButton.setId(View.generateViewId());
             myButton.setOnClickListener(this);
-            myButton.setMaxHeight(0);
-            myButton.setMinWidth(0);
-            myButton.setWidth(0);
-            myButton.setHeight(0);
+
             myButton.setBackgroundResource(R.drawable.border);
             gLayoutTab.addView(myButton);
         }
 
         for (int i = 0; i < 9; i++) {
-            myButton = new Button(this);
-            myButton.setMaxHeight(0);
-            myButton.setMinWidth(0);
-            myButton.setWidth(0);
-            myButton.setHeight(0);
-            myButton.setText(i + 1 + "");
-            myButton.setBackgroundColor(Color.WHITE);
+            myButton = new ImageButton(this);
+            setNum((i+1),myButton);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                myButton.setBackgroundColor(getColor(R.color.background));
+            }
             myButton.setId(View.generateViewId());
             myButton.setOnClickListener(this);
             gLayoutBtn.addView(myButton);
@@ -127,17 +126,19 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
     public void onClick(View view) {
         mediaPlayer  = MediaPlayer.create(this,R.raw.click);
         mediaPlayer.start();
-        isDone = false;
-        Button button = (Button) view;
+        //isDone = false;
+        ImageButton button = (ImageButton) view;
         int selectedId = view.getId();
         if (selectedId <= 81) { // Button is on the board
-            selectedRow = selectedId % 9;
-            selectedCol = selectedId / 9;
+            selectedCol = (selectedId-1) / 9;
+            selectedRow = ((selectedId-1) % 9);
+            System.out.println(selectedId);
+            System.out.println(selectedCol+","+selectedRow);
             if (sudokuTab[selectedCol][selectedRow] == 0) { // Check if the number is not already occupied
                 if (selectedNumber != 0) { // Make sure a number is selected
                     sudokuTab[selectedCol][selectedRow] = selectedNumber;
-                    button.setText(selectedNumber + "");
-                    isDone = true;
+                    setNum(selectedNumber, button);
+                    //isDone = true;
                 } else // No number selected
                     showAlert(getString(R.string.alertaPrev));
             } else { // Cell occupied
@@ -155,7 +156,7 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
                 startActivity(intentGame);
                 //break;
             } else { // Selected number change (bottom buttons)
-                selectedNumber = Integer.parseInt(String.valueOf(button.getText()));
+                selectedNumber = selectedId-81;
             }
         }
 
@@ -167,8 +168,8 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
             //TODO Add language
             startActivity(intentGame);
         } else {
-            System.out.println(sudokuTab[selectedCol][selectedRow] + "," + sudokuSol[selectedCol][selectedRow]);
-            if (sudokuTab[selectedCol][selectedRow] != sudokuSol[selectedCol][selectedRow] && isDone) { // Condición de derrota
+            //System.out.println(sudokuTab[selectedCol][selectedRow] + "," + sudokuSol[selectedCol][selectedRow]);
+            if (sudokuTab[selectedCol][selectedRow] != sudokuSol[selectedCol][selectedRow]) { // Condición de derrota
                 Intent intentGame = new Intent(GameWindow.this, FinishWindow.class);
                 intentGame.putExtra("Difficulty", dif);
                 intentGame.putExtra("Time", 60);// TODO Time game
@@ -179,14 +180,42 @@ public class GameWindow extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    private void setNum(int num, ImageButton ib) {
+        switch (num){
+            case 1:
+                ib.setImageResource(R.drawable.num1);
+                break;
+            case 2:
+                ib.setImageResource(R.drawable.num2);
+                break;
+            case 3:
+                ib.setImageResource(R.drawable.num3);
+                break;
+            case 4:
+                ib.setImageResource(R.drawable.num4);
+                break;
+            case 5:
+                ib.setImageResource(R.drawable.num5);
+                break;
+            case 6:
+                ib.setImageResource(R.drawable.num6);
+                break;
+            case 7:
+                ib.setImageResource(R.drawable.num7);
+                break;
+            case 8:
+                ib.setImageResource(R.drawable.num8);
+                break;
+            case 9:
+                ib.setImageResource(R.drawable.num9);
+                break;
+            case 0:
+                ib.setImageResource(R.drawable.numno);
+                break;
+        }
+    }
+
     private void showAlert(String alert) {
         Toast.makeText(this, alert, Toast.LENGTH_SHORT).show();
     }
-
-    /*protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("A");
-        dif = Difficulty.valueOf(data.getStringExtra("Difficulty"));
-
-    }*/
 }
